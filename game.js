@@ -15,6 +15,49 @@ const COLORS = [
   '#ffb74d', // L - orange
 ];
 
+const SKINS = {
+  retro: {
+    colors: COLORS,
+    glow: false,
+    cornerRadius: 0,
+  },
+  neon: {
+    colors: [
+      null,
+      '#0ff',    // I - cyan
+      '#ff0',    // O - yellow
+      '#f0f',    // T - magenta
+      '#0f0',    // S - green
+      '#f00',    // Z - red
+      '#00f',    // J - blue
+      '#ff8800', // L - orange
+    ],
+    glow: true,
+    glowColor: '#fff',
+    shadowBlur: 20,
+  },
+  pastel: {
+    colors: [
+      null,
+      '#a8d8ea', // I - light cyan
+      '#ffd1dc', // O - light pink
+      '#c1a3ff', // T - light purple
+      '#c8e6c9', // S - light green
+      '#ffcccc', // Z - light red
+      '#b3d9ff', // J - light blue
+      '#ffe0b2', // L - light orange
+    ],
+    glow: false,
+    cornerRadius: 4,
+  },
+  pixel: {
+    colors: COLORS,
+    glow: false,
+    cornerRadius: 0,
+    texture: true,
+  },
+};
+
 const PIECES = [
   null,
   [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]], // I
@@ -49,7 +92,7 @@ const controlsList = document.getElementById('controls-list');
 const startLevelSelect = document.getElementById('start-level');
 
 let board, current, next, score, lines, level, paused, gameOver, lastTime, dropAccum, dropInterval, animId;
-let pauseMenuOpen = false, startLevel = 1;
+let pauseMenuOpen = false, startLevel = 1, currentSkin = 'retro';
 
 function getThemeColor(varName) {
   return getComputedStyle(document.body).getPropertyValue(varName).trim();
@@ -71,8 +114,24 @@ function toggleTheme() {
   applyTheme(isDark ? 'light' : 'dark');
 }
 
+function applySkin(name) {
+  if (!SKINS[name]) return;
+  currentSkin = name;
+  localStorage.setItem('skin', name);
+  if (typeof board !== 'undefined' && board) {
+    draw();
+    drawNext();
+  }
+}
+
 applyTheme(localStorage.getItem('theme') === 'light' ? 'light' : 'dark');
 themeToggleBtn.addEventListener('click', toggleTheme);
+
+applySkin(localStorage.getItem('skin') || 'retro');
+const skinSelectEl = document.getElementById('skin-select');
+if (skinSelectEl) {
+  skinSelectEl.addEventListener('change', e => applySkin(e.target.value));
+}
 
 function createBoard() {
   return Array.from({ length: ROWS }, () => new Array(COLS).fill(0));
@@ -200,6 +259,55 @@ function drawBlock(context, x, y, colorIndex, size, alpha) {
   context.globalAlpha = 1;
 }
 
+function drawPixelTexture(context, x, y, colorIndex, size) {
+  const skin = SKINS[currentSkin];
+  if (!skin.texture) return;
+
+  const dotSize = 2;
+  const spacing = 4;
+  context.fillStyle = 'rgba(255, 255, 255, 0.15)';
+
+  for (let dy = 0; dy < size - 2; dy += spacing) {
+    for (let dx = 0; dx < size - 2; dx += spacing) {
+      context.fillRect(x * size + 1 + dx, y * size + 1 + dy, dotSize, dotSize);
+    }
+  }
+}
+
+function drawBlockSkinned(context, x, y, colorIndex, size, alpha) {
+  if (!colorIndex) return;
+
+  const skin = SKINS[currentSkin];
+  const color = skin.colors[colorIndex];
+  context.globalAlpha = alpha ?? 1;
+
+  // Apply glow effect for neon skin
+  if (skin.glow) {
+    context.shadowBlur = skin.shadowBlur;
+    context.shadowColor = skin.glowColor;
+  }
+
+  // Draw the main block
+  context.fillStyle = color;
+  context.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
+
+  // Draw highlight for all skins except pixel (which gets texture instead)
+  if (currentSkin !== 'pixel') {
+    context.shadowBlur = 0;
+    context.shadowColor = 'transparent';
+    context.fillStyle = getThemeColor('--highlight-color');
+    context.fillRect(x * size + 1, y * size + 1, size - 2, 4);
+  } else {
+    context.shadowBlur = 0;
+    context.shadowColor = 'transparent';
+    drawPixelTexture(context, x, y, colorIndex, size);
+  }
+
+  context.globalAlpha = 1;
+  context.shadowBlur = 0;
+  context.shadowColor = 'transparent';
+}
+
 function drawGrid() {
   ctx.strokeStyle = getThemeColor('--grid-color');
   ctx.lineWidth = 0.5;
@@ -224,19 +332,19 @@ function draw() {
   // board
   for (let r = 0; r < ROWS; r++)
     for (let c = 0; c < COLS; c++)
-      drawBlock(ctx, c, r, board[r][c], BLOCK);
+      drawBlockSkinned(ctx, c, r, board[r][c], BLOCK);
 
   // ghost
   const gy = ghostY();
   for (let r = 0; r < current.shape.length; r++)
     for (let c = 0; c < current.shape[r].length; c++)
       if (current.shape[r][c])
-        drawBlock(ctx, current.x + c, gy + r, current.shape[r][c], BLOCK, 0.2);
+        drawBlockSkinned(ctx, current.x + c, gy + r, current.shape[r][c], BLOCK, 0.2);
 
   // current piece
   for (let r = 0; r < current.shape.length; r++)
     for (let c = 0; c < current.shape[r].length; c++)
-      drawBlock(ctx, current.x + c, current.y + r, current.shape[r][c], BLOCK);
+      drawBlockSkinned(ctx, current.x + c, current.y + r, current.shape[r][c], BLOCK);
 }
 
 function drawNext() {
@@ -247,7 +355,7 @@ function drawNext() {
   const offY = Math.floor((4 - shape.length) / 2);
   for (let r = 0; r < shape.length; r++)
     for (let c = 0; c < shape[r].length; c++)
-      drawBlock(nextCtx, offX + c, offY + r, shape[r][c], NB);
+      drawBlockSkinned(nextCtx, offX + c, offY + r, shape[r][c], NB);
 }
 
 function endGame() {
