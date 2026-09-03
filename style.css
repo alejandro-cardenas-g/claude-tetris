@@ -70,6 +70,13 @@ body {
   justify-content: center;
   gap: 12px;
   margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.controls-top {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 .game-title {
@@ -78,6 +85,27 @@ body {
   font-weight: 800;
   letter-spacing: 8px;
   color: var(--title-color);
+}
+
+.skin-selector {
+  background: var(--board-bg);
+  border: 1px solid var(--board-border);
+  border-radius: 6px;
+  font-size: 13px;
+  padding: 6px 8px;
+  cursor: pointer;
+  color: var(--fg);
+  transition: background 0.15s, border-color 0.15s;
+  font-weight: 500;
+}
+
+.skin-selector:hover {
+  background: var(--kbd-bg);
+}
+
+.skin-selector option {
+  background: var(--board-bg);
+  color: var(--fg);
 }
 
 .theme-toggle {
