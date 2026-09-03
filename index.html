@@ -54,6 +54,54 @@
         <button id="restart-btn">Reiniciar</button>
       </div>
     </div>
+
+    <div id="pause-menu" class="pause-menu hidden">
+      <div class="pause-menu-box">
+        <h2 class="pause-title">PAUSA</h2>
+
+        <div class="pause-option">
+          <button id="pause-resume-btn" class="pause-btn primary">Reanudar</button>
+        </div>
+
+        <div class="pause-option">
+          <label for="start-level" class="pause-label">Nivel inicial (próxima partida):</label>
+          <select id="start-level" class="pause-select">
+            <option value="1">Nivel 1</option>
+            <option value="2">Nivel 2</option>
+            <option value="3">Nivel 3</option>
+            <option value="4">Nivel 4</option>
+            <option value="5">Nivel 5</option>
+            <option value="6">Nivel 6</option>
+            <option value="7">Nivel 7</option>
+            <option value="8">Nivel 8</option>
+            <option value="9">Nivel 9</option>
+            <option value="10">Nivel 10</option>
+          </select>
+        </div>
+
+        <div class="pause-option">
+          <button id="pause-controls-btn" class="pause-btn secondary">Ver controles</button>
+        </div>
+
+        <div class="pause-option">
+          <button id="pause-restart-btn" class="pause-btn secondary">Reiniciar</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="controls-modal" class="controls-modal hidden">
+      <div class="controls-modal-box">
+        <h2 class="controls-title">Controles</h2>
+        <ul class="controls-list">
+          <li><kbd>←</kbd><kbd>→</kbd> — Mover pieza a izquierda/derecha</li>
+          <li><kbd>↑</kbd> o <kbd>X</kbd> — Rotar pieza</li>
+          <li><kbd>↓</kbd> — Bajar pieza (soft drop)</li>
+          <li><kbd>Space</kbd> — Caída instantánea (hard drop)</li>
+          <li><kbd>P</kbd> o <kbd>Esc</kbd> — Pausa/Reanudar</li>
+        </ul>
+        <button id="controls-close-btn" class="pause-btn primary">Cerrar</button>
+      </div>
+    </div>
   </div>
 
   <script src="game.js"></script>

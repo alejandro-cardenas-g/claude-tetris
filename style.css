@@ -227,3 +227,161 @@ kbd {
 #restart-btn:hover {
   background: var(--btn-hover-bg);
 }
+
+/* ---- Pause Menu ---- */
+.pause-menu {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--overlay-bg);
+  backdrop-filter: blur(4px);
+  border-radius: 4px;
+  z-index: 100;
+}
+
+.pause-menu.hidden {
+  display: none;
+}
+
+.pause-menu-box {
+  background: var(--board-bg);
+  border: 2px solid var(--board-border);
+  border-radius: 8px;
+  padding: 32px;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+}
+
+.pause-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: var(--title-color);
+  margin: 0 0 12px 0;
+}
+
+.pause-option {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pause-label {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--label-color);
+  font-weight: 600;
+}
+
+.pause-select {
+  background: var(--board-bg);
+  border: 1px solid var(--board-border);
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--value-color);
+  cursor: pointer;
+  font-weight: 600;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.pause-select:hover {
+  border-color: var(--value-color);
+}
+
+.pause-select:focus {
+  outline: none;
+  border-color: var(--value-color);
+  box-shadow: 0 0 8px rgba(122, 162, 247, 0.3);
+}
+
+.pause-btn {
+  background: var(--btn-bg);
+  color: var(--btn-color);
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.15s;
+  width: 100%;
+}
+
+.pause-btn:hover {
+  background: var(--btn-hover-bg);
+}
+
+.pause-btn.secondary {
+  background: var(--kbd-bg);
+  color: var(--kbd-color);
+  border: 1px solid var(--kbd-border);
+}
+
+.pause-btn.secondary:hover {
+  background: var(--board-border);
+}
+
+/* ---- Controls Modal ---- */
+.controls-modal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--overlay-bg);
+  backdrop-filter: blur(4px);
+  border-radius: 4px;
+  z-index: 110;
+}
+
+.controls-modal.hidden {
+  display: none;
+}
+
+.controls-modal-box {
+  background: var(--board-bg);
+  border: 2px solid var(--board-border);
+  border-radius: 8px;
+  padding: 32px;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+}
+
+.controls-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: var(--title-color);
+  margin: 0 0 12px 0;
+}
+
+.controls-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.controls-list li {
+  font-size: 13px;
+  color: var(--controls-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.controls-list kbd {
+  font-size: 12px;
+}
