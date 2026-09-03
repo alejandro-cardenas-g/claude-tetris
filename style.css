@@ -227,3 +227,133 @@ kbd {
 #restart-btn:hover {
   background: var(--btn-hover-bg);
 }
+
+/* ---- Pause Menu ---- */
+.pause-menu {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--overlay-bg);
+  backdrop-filter: blur(4px);
+  border-radius: 4px;
+  z-index: 1000;
+}
+
+.pause-menu.hidden {
+  display: none;
+}
+
+.pause-menu-box {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.pause-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: var(--overlay-title-color);
+  margin: 0;
+}
+
+.pause-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 200px;
+}
+
+.pause-btn {
+  background: var(--btn-bg);
+  color: var(--btn-color);
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.15s;
+}
+
+.pause-btn:hover {
+  background: var(--btn-hover-bg);
+}
+
+.level-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.level-selector label {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--label-color);
+  font-weight: 600;
+}
+
+.level-input {
+  background: var(--board-bg);
+  color: var(--value-color);
+  border: 1px solid var(--board-border);
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.level-input:hover {
+  background: var(--kbd-bg);
+}
+
+.controls-display {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px 16px;
+  background: var(--board-bg);
+  border: 1px solid var(--board-border);
+  border-radius: 6px;
+  margin-top: 8px;
+}
+
+.controls-display.hidden {
+  display: none;
+}
+
+.controls-display h3 {
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: var(--overlay-title-color);
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  width: 100%;
+  text-align: left;
+}
+
+.controls-display ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.controls-display li {
+  font-size: 12px;
+  color: var(--controls-color);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}

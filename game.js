@@ -40,8 +40,14 @@ const overlayTitle = document.getElementById('overlay-title');
 const overlayScore = document.getElementById('overlay-score');
 const restartBtn = document.getElementById('restart-btn');
 const themeToggleBtn = document.getElementById('theme-toggle');
+const pauseMenu = document.getElementById('pause-menu');
+const resumeBtn = document.getElementById('resume-btn');
+const restartPauseBtn = document.getElementById('restart-pause-btn');
+const controlsBtn = document.getElementById('controls-btn');
+const controlsDisplay = document.getElementById('controls-display');
+const startLevelSelect = document.getElementById('start-level');
 
-let board, current, next, score, lines, level, paused, gameOver, lastTime, dropAccum, dropInterval, animId;
+let board, current, next, score, lines, level, paused, gameOver, lastTime, dropAccum, dropInterval, animId, menuOpen;
 
 function getThemeColor(varName) {
   return getComputedStyle(document.body).getPropertyValue(varName).trim();
@@ -250,18 +256,51 @@ function endGame() {
   overlay.classList.remove('hidden');
 }
 
+function openPauseMenu() {
+  menuOpen = true;
+  pauseMenu.classList.remove('hidden');
+  controlsDisplay.classList.add('hidden');
+}
+
+function closePauseMenu() {
+  menuOpen = false;
+  pauseMenu.classList.add('hidden');
+  controlsDisplay.classList.add('hidden');
+}
+
 function togglePause() {
   if (gameOver) return;
-  paused = !paused;
-  if (!paused) {
+  if (menuOpen) {
+    closePauseMenu();
+    paused = false;
     lastTime = performance.now();
     loop(lastTime);
   } else {
+    paused = true;
     cancelAnimationFrame(animId);
-    overlayTitle.textContent = 'PAUSA';
-    overlayScore.textContent = '';
-    overlay.classList.remove('hidden');
+    openPauseMenu();
   }
+}
+
+function resumeGame() {
+  closePauseMenu();
+  paused = false;
+  lastTime = performance.now();
+  loop(lastTime);
+}
+
+function restartFromMenu() {
+  closePauseMenu();
+  paused = false;
+  const startLevel = parseInt(startLevelSelect.value, 10);
+  level = startLevel;
+  lines = (startLevel - 1) * 10;
+  dropInterval = Math.max(100, 1000 - (level - 1) * 90);
+  init();
+}
+
+function toggleControls() {
+  controlsDisplay.classList.toggle('hidden');
 }
 
 function loop(ts) {
@@ -286,6 +325,7 @@ function init() {
   lines = 0;
   level = 1;
   paused = false;
+  menuOpen = false;
   gameOver = false;
   dropInterval = 1000;
   dropAccum = 0;
@@ -294,13 +334,18 @@ function init() {
   spawn();
   updateHUD();
   overlay.classList.add('hidden');
+  pauseMenu.classList.add('hidden');
   cancelAnimationFrame(animId);
   animId = requestAnimationFrame(loop);
 }
 
 document.addEventListener('keydown', e => {
   if (e.code === 'KeyP') { togglePause(); return; }
-  if (paused || gameOver) return;
+  if (e.code === 'Escape') {
+    if (menuOpen) closePauseMenu();
+    return;
+  }
+  if (paused || gameOver || menuOpen) return;
   switch (e.code) {
     case 'ArrowLeft':
       if (!collide(current.shape, current.x - 1, current.y)) current.x--;
@@ -324,5 +369,8 @@ document.addEventListener('keydown', e => {
 });
 
 restartBtn.addEventListener('click', init);
+resumeBtn.addEventListener('click', resumeGame);
+restartPauseBtn.addEventListener('click', restartFromMenu);
+controlsBtn.addEventListener('click', toggleControls);
 
 init();
