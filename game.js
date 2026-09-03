@@ -292,11 +292,12 @@ function resumeGame() {
 function restartFromMenu() {
   closePauseMenu();
   paused = false;
+  init();
   const startLevel = parseInt(startLevelSelect.value, 10);
   level = startLevel;
   lines = (startLevel - 1) * 10;
   dropInterval = Math.max(100, 1000 - (level - 1) * 90);
-  init();
+  updateHUD();
 }
 
 function toggleControls() {
