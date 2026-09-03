@@ -1,0 +1,59 @@
+name: Claude Issue Triage
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Triage issue with Claude
+        id: claude-triage
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            Analyze GitHub issue #${{ github.event.issue.number }} in ${{ github.repository }}
+            (title: "${{ github.event.issue.title }}").
+
+            This repo is a vanilla JS Tetris game with no build system. The only source
+            files are index.html, style.css, and game.js (game.js holds all game logic:
+            board matrix, piece spawn/rotation/collision, line clearing, scoring, game loop).
+
+            Steps:
+            1. Read the issue title and body via `gh issue view ${{ github.event.issue.number }}`.
+            2. Read index.html, style.css, and game.js as needed to ground your analysis in
+               actual code (function/variable names, line areas) rather than guessing.
+            3. Choose 1-3 labels that best classify the issue from this suggested taxonomy,
+               creating any that don't yet exist in the repo (`gh label create`) with a
+               reasonable color/description:
+               - Type: bug, enhancement, question, documentation
+               - Priority: priority:high, priority:medium, priority:low
+               - Area: area:rendering, area:input, area:scoring, area:game-loop
+               Only create a new label if none of these (or existing repo labels) fit well.
+            4. Apply the chosen labels: `gh issue edit ${{ github.event.issue.number }} --add-label "<label>"`.
+            5. Post one comment on the issue (`gh issue comment ${{ github.event.issue.number }} --body "..."`)
+               with a structured diagnosis in this format:
+
+               ## Diagnosis
+               **Root cause analysis:** <your analysis of what's happening / being requested>
+
+               **Affected files/areas:** <specific files, functions, or code regions in game.js/index.html/style.css>
+
+               **Suggested approach:** <concrete steps or approach for implementing a fix,
+               written so it can guide a future implementation task>
+
+               Do not start implementing the fix — this comment is only a diagnosis to guide
+               later implementation work.
+          claude_args: '--allowedTools "Read,Grep,Glob,Bash(gh issue view:*),Bash(gh issue edit:*),Bash(gh issue comment:*),Bash(gh label list:*),Bash(gh label create:*)"'
