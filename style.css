@@ -364,3 +364,119 @@ kbd {
   outline: none;
   border-color: var(--value-color);
 }
+
+/* ---- High Scores ---- */
+.highscores-list {
+  list-style: decimal inside;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--controls-color);
+}
+
+.highscores-list li {
+  padding: 4px 6px;
+  border-radius: 3px;
+  font-family: 'Courier New', Courier, monospace;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.highscores-list li.highlight-row {
+  background: var(--highlight-color);
+  color: var(--value-color);
+  font-weight: 700;
+}
+
+#best-stats {
+  gap: 4px;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.stat-label {
+  color: var(--label-color);
+  font-weight: 600;
+}
+
+.stat-value {
+  color: var(--value-color);
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
+}
+
+.reset-btn {
+  background: var(--btn-bg);
+  color: var(--btn-color);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.15s;
+  width: 100%;
+}
+
+.reset-btn:hover {
+  background: var(--btn-hover-bg);
+}
+
+/* ---- High Score Entry ---- */
+.name-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 8px 0;
+  width: 100%;
+}
+
+.name-entry.hidden {
+  display: none;
+}
+
+.player-name-input {
+  padding: 8px 12px;
+  border: 1px solid var(--board-border);
+  background: var(--board-bg);
+  color: var(--fg);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 13px;
+  text-align: center;
+  transition: border-color 0.15s;
+}
+
+.player-name-input:focus {
+  outline: none;
+  border-color: var(--value-color);
+}
+
+.player-name-input::placeholder {
+  color: var(--label-color);
+}
+
+.submit-score-btn {
+  background: var(--btn-bg);
+  color: var(--btn-color);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.15s;
+}
+
+.submit-score-btn:hover {
+  background: var(--btn-hover-bg);
+}
