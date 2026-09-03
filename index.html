@@ -51,6 +51,16 @@
       <div class="overlay-box">
         <p id="overlay-title">GAME OVER</p>
         <p id="overlay-score"></p>
+        <div id="stats-container" class="stats-container hidden">
+          <p class="stat-item"><span class="stat-label">Líneas:</span> <span id="final-lines">0</span></p>
+          <p class="stat-item"><span class="stat-label">Nivel:</span> <span id="final-level">1</span></p>
+          <p class="stat-item"><span class="stat-label">Mejor combo:</span> <span id="best-combo">0</span></p>
+        </div>
+        <div id="name-input-container" class="name-input-container hidden">
+          <p class="small-label">¡Entraste al TOP 5!</p>
+          <input id="player-name" type="text" placeholder="Tu nombre" maxlength="12" class="player-name-input" />
+          <button id="save-score-btn" class="save-score-btn">Guardar</button>
+        </div>
         <button id="restart-btn">Reiniciar</button>
       </div>
     </div>
@@ -102,6 +112,17 @@
         <button id="controls-close-btn" class="pause-btn primary">Cerrar</button>
       </div>
     </div>
+
+    <div id="records-panel" class="records-panel hidden">
+      <div class="records-header">
+        <h2>TOP 5 RÉCORDS</h2>
+        <button id="close-records-btn" class="close-records-btn" title="Cerrar">×</button>
+      </div>
+      <div id="records-list" class="records-list"></div>
+      <button id="reset-records-btn" class="reset-records-btn">Resetear Récords</button>
+    </div>
+
+    <button id="view-records-btn" class="view-records-btn" title="Ver récords">🏆</button>
   </div>
 
   <script src="game.js"></script>

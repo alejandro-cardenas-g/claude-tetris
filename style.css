@@ -385,3 +385,239 @@ kbd {
 .controls-list kbd {
   font-size: 12px;
 }
+
+/* ---- Stats in overlay ---- */
+.stats-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0;
+  font-size: 13px;
+}
+
+.stats-container.hidden {
+  display: none;
+}
+
+.stat-item {
+  color: var(--overlay-score-color);
+  margin: 0;
+}
+
+.stat-label {
+  font-weight: 600;
+}
+
+.small-label {
+  font-size: 12px;
+  color: #ffd54f;
+  margin: 0 0 8px 0;
+}
+
+/* ---- Name input ---- */
+.name-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  margin: 12px 0;
+}
+
+.name-input-container.hidden {
+  display: none;
+}
+
+.player-name-input {
+  background: var(--board-bg);
+  border: 1px solid var(--board-border);
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--fg);
+  text-align: center;
+  font-weight: 500;
+  width: 160px;
+  transition: border-color 0.15s;
+}
+
+.player-name-input:focus {
+  outline: none;
+  border-color: var(--value-color);
+}
+
+.save-score-btn {
+  background: var(--btn-bg);
+  color: var(--btn-color);
+  border: none;
+  border-radius: 4px;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.save-score-btn:hover {
+  background: var(--btn-hover-bg);
+}
+
+/* ---- Records panel ---- */
+.records-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--board-bg);
+  border: 2px solid var(--board-border);
+  border-radius: 8px;
+  padding: 20px;
+  width: 90%;
+  max-width: 360px;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 1001;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.records-panel.hidden {
+  display: none;
+}
+
+.records-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--board-border);
+}
+
+.records-header h2 {
+  margin: 0;
+  font-size: 18px;
+  letter-spacing: 2px;
+  color: var(--title-color);
+}
+
+.close-records-btn {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: var(--fg);
+  cursor: pointer;
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s;
+}
+
+.close-records-btn:hover {
+  color: var(--overlay-title-color);
+}
+
+.records-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.record-item {
+  background: var(--board-bg);
+  border: 1px solid var(--board-border);
+  border-radius: 4px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.record-item.current {
+  border-color: #ffd54f;
+  background: rgba(255, 213, 79, 0.1);
+}
+
+.record-rank {
+  font-weight: 700;
+  color: var(--value-color);
+  min-width: 24px;
+}
+
+.record-info {
+  flex: 1;
+  margin-left: 12px;
+}
+
+.record-name {
+  font-weight: 600;
+  color: var(--fg);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.record-details {
+  font-size: 11px;
+  color: var(--label-color);
+  display: flex;
+  gap: 12px;
+}
+
+.record-score {
+  font-weight: 700;
+  color: var(--overlay-score-color);
+  min-width: 50px;
+  text-align: right;
+}
+
+.reset-records-btn {
+  width: 100%;
+  background: rgba(229, 115, 115, 0.15);
+  color: #e57373;
+  border: 1px solid #e57373;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.reset-records-btn:hover {
+  background: rgba(229, 115, 115, 0.3);
+}
+
+/* ---- View records button ---- */
+.view-records-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--btn-bg);
+  color: var(--btn-color);
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: background 0.15s, transform 0.15s;
+  z-index: 1000;
+}
+
+.view-records-btn:hover {
+  background: var(--btn-hover-bg);
+  transform: scale(1.1);
+}
+
+.records-panel ~ .view-records-btn:not(.hidden) {
+  display: none;
+}
