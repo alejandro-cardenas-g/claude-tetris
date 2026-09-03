@@ -585,7 +585,6 @@ document.addEventListener('keydown', e => {
 
 restartBtn.addEventListener('click', init);
 
-<<<<<<< HEAD
 resumeBtn.addEventListener('click', togglePause);
 pauseRestartBtn.addEventListener('click', () => {
   closePauseMenu();
@@ -593,7 +592,7 @@ pauseRestartBtn.addEventListener('click', () => {
 });
 viewControlsBtn.addEventListener('click', toggleControlsList);
 startLevelSelect.addEventListener('change', onStartLevelChange);
-=======
+
 resetHighscoresBtn.addEventListener('click', () => {
   resetHighScores();
   renderHighScores();
@@ -601,6 +600,5 @@ resetHighscoresBtn.addEventListener('click', () => {
 });
 
 submitScoreBtn.addEventListener('click', submitScoreEntry);
->>>>>>> 67586ab (feat: add high-score table with local storage)
 
 init();
